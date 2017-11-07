@@ -1,0 +1,1 @@
+OMP_NUM_THREADS=1 python examples/mygym/train_a3c_gym.py 1 --env Breakout-v0 --outdir outdir --t-max 5 --lr 7e-4 --min_reward -500 --beta 1e-2 --reward-scale-factor 1.0 --logger-level 20 --rmsprop-epsilon 1e-1 --eval-interval 10000000 --eval-n-runs 10 --loadtosim break --demo --render-b2w --chain_period 100 --num_output_channels_sim 512

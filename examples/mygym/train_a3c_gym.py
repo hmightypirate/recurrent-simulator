@@ -77,12 +77,16 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('processes', type=int)
-    parser.add_argument('--env', type=str, default='CartPole-v0')
+    parser.add_argument('processes', type=int,
+                        help=('Number of processes during training.' +
+                              'This implementation only accepts one process.'))
+    parser.add_argument('--env', type=str, default='CartPole-v0',
+                        help=('Gym environment to use'))
     parser.add_argument('--arch', type=str, default='FFSoftmax',
                         choices=('FFSoftmax', 'FFMellowmax', 'LSTMGaussian'))
     parser.add_argument('--seed', type=int, default=None)
-    parser.add_argument('--outdir', type=str, default=None)
+    parser.add_argument('--outdir', type=str, default=None,
+                        help=('Folder in which to store the agent model (not used'))
     parser.add_argument('--t-max', type=int, default=5)
     parser.add_argument('--beta', type=float, default=1e-2)
     parser.add_argument('--profile', action='store_true')
@@ -104,18 +108,35 @@ def main():
     parser.add_argument('--min_reward', type=float, default=sys.float_info.min)
 
     # Extra params (simulated environment)
-    parser.add_argument('--loadtosim', type=str, default=None)
-    parser.add_argument('--savesim', type=str, default=None)
-    parser.add_argument('--unroll_dep', type=int, default=15)
-    parser.add_argument('--obs_dep', type=int, default=10)
-    parser.add_argument('--pred_dep', type=int, default=10)
-    parser.add_argument('--batch_size', type=int, default=16)
-    parser.add_argument('--warm_up_steps', type=int, default=6000)
-    parser.add_argument('--buffer_size_sim', type=int, default=1e4)
-    parser.add_argument('--training_steps', type=int, default=40)
-    parser.add_argument('--saving_steps', type=int, default=30000)
-    parser.add_argument('--chain_period', type=int, default=20)
-    parser.add_argument('--num_output_channels_sim', type=int, default=1024)
+    parser.add_argument('--loadtosim', type=str, default=None,
+                        help=('Loading previous model from folder'))
+    parser.add_argument('--savesim', type=str, default=None,
+                        help=('Saving checkpoint of env simulator in folder.'))
+    parser.add_argument('--unroll_dep', type=int, default=15,
+                        help=('Frames used as state initialization during ' +
+                              'training'))
+    parser.add_argument('--obs_dep', type=int, default=10,
+                        help=('Observation dependent steps during training'))
+    parser.add_argument('--pred_dep', type=int, default=10,
+                        help=('Prediction dependent steps during training'))
+    parser.add_argument('--batch_size', type=int, default=16,
+                        help=('Batch size for training the environment'))
+    parser.add_argument('--warm_up_steps', type=int, default=6000,
+                        help=('During training initial steps in which ' +
+                              'the model did not actually train'))
+    parser.add_argument('--buffer_size_sim', type=int, default=1e4,
+                        help=('Size of buffer to store environment states ' +
+                              '(frame + action)'))
+    parser.add_argument('--training_steps', type=int, default=40,
+                        help=('Steps betweent training updates'))
+    parser.add_argument('--saving_steps', type=int, default=30000,
+                        help=('Steps between model checkpoints' +
+                              'Only the best model so far is saved '))
+    parser.add_argument('--chain_period', type=int, default=20,
+                        help=('During tests steps between synchronizations ' +
+                              'with the orignal environment'))
+    parser.add_argument('--num_output_channels_sim', type=int, default=1024,
+                        help=('Dimension of the LSTM'))
 
     args = parser.parse_args()
 

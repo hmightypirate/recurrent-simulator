@@ -168,8 +168,9 @@ def main():
             misc.env_modifiers.make_rendered(env)
 
         # opt = optimizers.Adam()
-        opt = optimizers.RMSpropGraves(
-                lr=2.5e-5, alpha=0.95, momentum=0.9, eps=1e-2)
+        opt = optimizers.RMSpropGraves()
+        # opt = optimizers.RMSpropGraves(
+        # lr=2.5e-5, alpha=0.95, momentum=0.9, eps=1e-2)
         # opt.add_hook(chainer.optimizer.GradientClipping(40))
 
         env = env_sim_chainer.SimEnvironment(

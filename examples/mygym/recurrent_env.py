@@ -33,12 +33,12 @@ class RNNEnv(chainer.ChainList, RecurrentChainMixin):
 
         """
         
-        self.head = iclr_acer_link.ICLRSimHeadv2(
+        self.head = iclr_acer_link.ICLRSimHeadv3(
             n_input_channels=1,
             n_output_channels=n_output_channels,
             input_size=input_size)
 
-        self.deconv = iclr_acer_link.ICLRSimDeconvv2(
+        self.deconv = iclr_acer_link.ICLRSimDeconvv3(
             n_input_channels=n_output_channels,
             n_output_channels=n_input_channels,
             input_size=input_size)
